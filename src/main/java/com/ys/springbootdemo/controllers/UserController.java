@@ -45,8 +45,9 @@ public class UserController {
     @PutMapping(path = "/update")
     public @ResponseBody
     String updateUser(@RequestBody User user) {
-        User sessionUser = userRepository.findById(user.getId()).get();
-        if (sessionUser != null) {
+
+        if (userRepository.findById(user.getId()).isPresent()) {
+            User sessionUser = userRepository.findById(user.getId()).get();
             sessionUser.setName(user.getName());
             sessionUser.setEmail(user.getEmail());
             userRepository.save(sessionUser);
